@@ -21,10 +21,10 @@ export class ResetPasswordFormComponent {
 
   async onSubmit(e: Event) {
     e.preventDefault();
-    const { email } = this.formData;
+    const { username } = this.formData;
     this.loading = true;
 
-    const result = await this.authService.resetPassword(email);
+    const result = await this.authService['resetPassword'](username);
     this.loading = false;
 
     if (result.isOk) {

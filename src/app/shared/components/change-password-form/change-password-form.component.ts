@@ -30,7 +30,7 @@ export class ChangePasswordFormComponent implements OnInit {
     const { password } = this.formData;
     this.loading = true;
 
-    const result = await this.authService.changePassword(password, this.recoveryCode);
+    const result = await this.authService['changePassword'](password, this.recoveryCode);
     this.loading = false;
 
     if (result.isOk) {

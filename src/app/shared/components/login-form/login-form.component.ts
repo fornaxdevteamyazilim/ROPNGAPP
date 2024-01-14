@@ -1,10 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
+import { CommonModule, NgIfContext } from '@angular/common';
+import { Component, NgModule, TemplateRef } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { DxFormModule } from 'devextreme-angular/ui/form';
 import { DxLoadIndicatorModule } from 'devextreme-angular/ui/load-indicator';
-import notify from 'devextreme/ui/notify';
+////import notify from 'devextreme/ui/notify';
 import { AuthService } from '../../services';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -13,25 +14,28 @@ import { AuthService } from '../../services';
   styleUrls: ['./login-form.component.scss']
 })
 export class LoginFormComponent {
-  loading = false;
-  formData: any = {};
+  username: string = '';
+  password: string = '';
+  loading: boolean = false;
+formData: any;
+onCreateAccountClick: any;
+// onCreateAccountClick: any;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private router: Router,private authService: AuthService) {}
 
-  async onSubmit(e: Event) {
-    e.preventDefault();
-    const { email, password } = this.formData;
-    this.loading = true;
-
-    const result = await this.authService.logIn(email, password);
-    if (!result.isOk) {
-      this.loading = false;
-      notify(result.message, 'error', 2000);
-    }
-  }
-
-  onCreateAccountClick = () => {
-    this.router.navigate(['/create-account']);
+  login(): void {
+    this.authService.getToken(this.username, this.password)
+      .subscribe(
+        (response) => {
+          // Başarılı giriş durumunda yapılacak işlemler
+          console.log('Login successful', response);
+          //this.router.navigate(['/home']);
+        },
+        (error) => {
+          // Giriş başarısız olduğunda yapılacak işlemler
+          console.error('Login failed', error);
+        }
+      );
   }
 }
 @NgModule({
@@ -39,6 +43,7 @@ export class LoginFormComponent {
     CommonModule,
     RouterModule,
     DxFormModule,
+    FormsModule,
     DxLoadIndicatorModule
   ],
   declarations: [ LoginFormComponent ],
