@@ -16,4 +16,23 @@ export class AppComponent  {
   isAuthenticated() {
     return this.authService['loggedIn'];
   }
+
+
+  // ngOnInit(): void {
+  //   // Token alındığında yapılabilecek işlemler
+  // }
+
+  // isAuthenticated(): boolean {
+  //   return this.authService.isAuthenticated();
+  // }
+
+
+
+  //   ngOnInit(): void {
+  //   this.router.navigate(['/login-form']);
+  // }
+
+  // isAuthenticated(): boolean {
+  //   return !!localStorage.getItem('access_token');
+  // }
 }

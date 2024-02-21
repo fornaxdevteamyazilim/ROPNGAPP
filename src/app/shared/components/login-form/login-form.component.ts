@@ -22,20 +22,16 @@ onCreateAccountClick: any;
 // onCreateAccountClick: any;
 
   constructor(private router: Router,private authService: AuthService) {}
-
-  login(): void {
-    this.authService.getToken(this.username, this.password)
-      .subscribe(
-        (response) => {
-          // Başarılı giriş durumunda yapılacak işlemler
-          console.log('Login successful', response);
-          //this.router.navigate(['/home']);
-        },
-        (error) => {
-          // Giriş başarısız olduğunda yapılacak işlemler
-          console.error('Login failed', error);
+  login():  void {
+    this.authService.login(this.username, this.password)
+      .subscribe(response => {
+        if (response && response.access_token) {
+          localStorage.setItem('access_token', response.access_token);
+           this.router.navigate(['/home']);
+        } else {
+          console.log('Login Failed');
         }
-      );
+      });
   }
 }
 @NgModule({

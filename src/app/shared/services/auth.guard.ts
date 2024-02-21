@@ -6,30 +6,41 @@ const defaultPath = '/';
 export class AuthGuardService implements CanActivate {
   constructor(private router: Router, private authService: AuthService) { }
 
-  canActivate(route: ActivatedRouteSnapshot): boolean {
-    const login = this.authService['loggedIn'];
-    const isAuthForm = [
-      'login-form',
-      'reset-password',
-      'create-account',
-      'change-password/:recoveryCode'
-    ].includes(route.routeConfig?.path || defaultPath);
+  // canActivate(route: ActivatedRouteSnapshot): boolean {
+  //   const login = this.authService['loggedIn'];
+  //   const isAuthForm = [
+  //     'login-form',
+  //     'reset-password',
+  //     'create-account',
+  //     'change-password/:recoveryCode'
+  //   ].includes(route.routeConfig?.path || defaultPath);
 
-    if (login && isAuthForm) {
-      this.authService['lastAuthenticatedPath'] = defaultPath;
-      this.router.navigate([defaultPath]);
+  //   if (login && isAuthForm) {
+  //     this.authService['lastAuthenticatedPath'] = defaultPath;
+  //     this.router.navigate([defaultPath]);
+  //     return false;
+  //   }
+
+  //   if (!login && !isAuthForm) {
+  //     this.router.navigate(['/login-form']);
+  //   }
+
+  //   if (login) {
+  //     this.authService['lastAuthenticatedPath'] = route.routeConfig?.path || defaultPath;
+  //   }
+
+  //   return login || isAuthForm;
+  // }
+  
+  canActivate(): boolean {
+
+    const login = this.authService['loggedIn'];
+    if (this.authService.isAuthenticated()) {
+      return true;
+    } else {
+      this.router.navigate(['/login-form']);
       return false;
     }
-
-    if (!login && !isAuthForm) {
-      this.router.navigate(['/login-form']);
-    }
-
-    if (login) {
-      this.authService['lastAuthenticatedPath'] = route.routeConfig?.path || defaultPath;
-    }
-
-    return login || isAuthForm;
   }
 }
 

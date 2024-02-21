@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
     text: 'Logout',
     icon: 'runner',
     onClick: () => {
-      this.authService.logout();
+      this.router.navigate(['/login-form']);
     }
   }];
 

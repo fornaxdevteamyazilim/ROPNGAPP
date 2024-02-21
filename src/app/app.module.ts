@@ -39,7 +39,7 @@ const routes: Routes = [
     AuthService,
     ScreenService,
     AppInfoService,
-     { provide: 'http://sr.yazilimocagi.net:9063', useValue: environment.authUrl  }
+    // { provide: 'http://sr.yazilimocagi.net:9063', useValue: environment.authUrl  }
     ],
   
   bootstrap: [AppComponent]

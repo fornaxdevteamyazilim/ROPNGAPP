@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginFormComponent, ResetPasswordFormComponent, CreateAccountFormComponent, ChangePasswordFormComponent } from './shared/components';
+import {  ResetPasswordFormComponent, CreateAccountFormComponent, ChangePasswordFormComponent, LoginFormComponent } from './shared/components';
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { DxDataGridModule, DxFormModule } from 'devextreme-angular';
 import { AuthGuardService } from './shared/services/auth.guard';
+import { AuthService } from './shared/services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+
 
 
 
@@ -48,20 +52,18 @@ const routes: Routes = [
     component: ChangePasswordFormComponent,
     canActivate: [ AuthGuardService ]
   },
-  {
-    path: '**',
-    redirectTo: 'home'
-  }
+  { path: '', redirectTo: 'login-form', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true }), DxDataGridModule, DxFormModule],
-  providers: [AuthGuardService],
+  imports: [RouterModule.forRoot(routes, { useHash: true }), DxDataGridModule, DxFormModule,HttpClientModule,BrowserModule],
+  providers: [AuthService,AuthGuardService],
   exports: [RouterModule],
   declarations: [
     HomeComponent,
     ProfileComponent,
     TasksComponent
+    
   ]
 })
 export class AppRoutingModule { }
