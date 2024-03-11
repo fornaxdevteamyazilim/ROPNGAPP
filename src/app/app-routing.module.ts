@@ -35,7 +35,7 @@ const routes: Routes = [
   {
     path: 'login-form',
     component: LoginFormComponent,
-    canActivate: [ AuthGuardService ]
+    //canActivate: [ AuthGuardService ]
   },
   {
     path: 'reset-password',
@@ -52,11 +52,11 @@ const routes: Routes = [
     component: ChangePasswordFormComponent,
     canActivate: [ AuthGuardService ]
   },
-  { path: '', redirectTo: 'login-form', pathMatch: 'full' },
+  { path: '', redirectTo: '/login-form', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true }), DxDataGridModule, DxFormModule,HttpClientModule,BrowserModule],
+  imports: [RouterModule.forRoot(routes), DxDataGridModule, DxFormModule,HttpClientModule,BrowserModule],
   providers: [AuthService,AuthGuardService],
   exports: [RouterModule],
   declarations: [
